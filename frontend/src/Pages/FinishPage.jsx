@@ -1,17 +1,12 @@
-import React from "react";
+
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
+import Message from "../component/Message";
 import SubmitButton from "../component/SubmitButton";
 import { Link } from "react-router-dom";
-import Message from "../component/Message";
-import ChipSelect from "../component/ChipSelect";
-import SelectInput from "../component/SelectInput";
 import BackBtn from "../component/BackBtn";
 
 const FinishPage = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
@@ -45,28 +40,23 @@ const FinishPage = () => {
             4
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form >
           <h1 className="text-xl font-semibold text-center mb-4">
-            Complete Our Procedure
+            Thank You! Submission Successful
           </h1>
           <p className="text-base text-[hsl(188,78%,29%)] mb-6 text-center">
-            Collects this information to better understand our service want.
+            We’ve received your details and will get back to you shortly. You’re awesome for completing the process!
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <InputText title="Business Name" placename="Enter business name" />
-            <InputText
-              title="Website URL (optional)"
-              placename="Enter website URL"
-            />
+          <div className="grid grid-cols-1 gap-4 mb-6">
+            <Message title="Message" placename="Type Feedback"/>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Link to="/service">
-              <BackBtn />
-            </Link>
-            <SubmitButton />
-          </div>
+          <Link to="/">
+            <BackBtn />
+          </Link>
+
+
         </form>
       </div>
     </div>
