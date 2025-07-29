@@ -9,7 +9,7 @@ const UserDetailsPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault(); 
-        navigate('/company')
+        navigate('/business')
     };
 
     return (
@@ -39,8 +39,7 @@ const UserDetailsPage = () => {
             Let's Work Together
           </h1>
           <p className="text-base text-[hsl(188,78%,29%)] mb-6 text-center">
-            DigiRoad collects this information to better understand and serve
-            your business.
+            Your information helps us connect you with the most relevant resources.
           </p>
 
           <div className="grid grid-cols-1 gap-4 mb-6">
