@@ -2,8 +2,24 @@ import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
 import { Link } from "react-router-dom";
+import Message from "../component/Message";
+import ChipSelect from "../component/ChipSelect";
 
 const CompanyDetailsPage = () => {
+
+    const handleSubmit = (e) => {
+      e.preventDefault(); 
+  
+    };
+
+    const items = [
+    { id: "1", value: "BMW" },
+    { id: "2", value: "Porsche" },
+    { id: "3", value: "Jaguar" },
+    { id: "4", value: "Audi" },
+    { id: "5", value: "Mercedes" }
+  ];
+
   return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
       {/* RECTANGLES - Positioned Like the Design */}
@@ -20,25 +36,31 @@ const CompanyDetailsPage = () => {
             </div>
           </Link>
           <div className="bg-[hsl(188,78%,41%)] w-20 md:w-24 rounded-full h-1"></div>
-          <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
-            2
-          </div>
-          <div className="bg-[hsl(233,30%,95%)] w-20 md:w-24 rounded-full h-1"></div>
+            <div className="font-roboto bg-[hsl(188,78%,41%)] text-white w-7 h-7 flex justify-center items-center rounded-full">
+              2
+            </div>
+          <div className="bg-[hsl(188,78%,41%)] w-20 md:w-24 rounded-full h-1"></div>
           <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
             3
           </div>
         </div>
-        <form>
-          <h1 className="text-xl font-semibold text-center mb-4">Bussinuss</h1>
+        <form onSubmit={handleSubmit}>
+          <h1 className="text-xl font-semibold text-center mb-4">Business Details</h1>
           <p className="text-base text-[hsl(188,78%,29%)] mb-6 text-center">
             DigiRoad collects this information to better understand and serve
             your business.
           </p>
 
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <InputText title="Business Name" placename="Enter business name" />
+            <InputText title="Website URL (optional)" placename="Enter website URL" />
+        
+            
+          </div>
           <div className="grid grid-cols-1 gap-4 mb-6">
-            <InputText title="Name" placename="Name" />
-            <InputText title="Email" placename="Email" types="email" />
-            <InputText title="Phone" placename="Phone" types="number" />
+            <ChipSelect title="Business type" items={items} placeholder="Select a Brand"/>
+            <Message title="Description" placename="Bisiness description" />
+            
           </div>
 
           <SubmitButton />

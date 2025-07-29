@@ -2,8 +2,16 @@ import React from "react";
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
+import { useNavigate } from 'react-router-dom';
 
 const UserDetailsPage = () => {
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); 
+        navigate('/company')
+    };
+
     return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
       {/* RECTANGLES - Positioned Like the Design */}
@@ -26,7 +34,7 @@ const UserDetailsPage = () => {
             3
           </div>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h1 className="text-xl font-semibold text-center mb-4">
             Let's Work Together
           </h1>
