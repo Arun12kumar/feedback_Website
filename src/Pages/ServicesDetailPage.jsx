@@ -1,17 +1,15 @@
+
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import Message from "../component/Message";
 import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
 
-const CompanyDetailsPage = () => {
-  const navigate = useNavigate();
-
+const ServicesDetailPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/service')
   };
 
   const items = [
@@ -59,9 +57,11 @@ const CompanyDetailsPage = () => {
             </div>
           </Link>
           <div className="bg-[hsl(188,78%,41%)] w-16 md:w-20 rounded-full h-1"></div>
+          <Link to="/business">
           <div className="font-roboto bg-[hsl(188,78%,41%)] text-white w-7 h-7 flex justify-center items-center rounded-full">
             2
           </div>
+          </Link>
           <div className="bg-[hsl(188,78%,41%)] w-16 md:w-20 rounded-full h-1"></div>
           <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
             3
@@ -73,11 +73,10 @@ const CompanyDetailsPage = () => {
         </div>
         <form onSubmit={handleSubmit}>
           <h1 className="text-xl font-semibold text-center mb-4">
-            Business Details
+            Look's Our Services
           </h1>
           <p className="text-base text-[hsl(188,78%,29%)] mb-6 text-center">
-            Collects this information to better understand and serve your
-            business.
+            Collects this information to better understand our service want.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -107,4 +106,4 @@ const CompanyDetailsPage = () => {
   );
 };
 
-export default CompanyDetailsPage;
+export default ServicesDetailPage;

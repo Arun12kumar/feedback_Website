@@ -12,7 +12,7 @@ const SelectInput = ({ title, options = [], placeholder = "Select an option" }) 
         className="border border-gray-300 rounded px-3 py-2 bg-white text-base 
           focus:outline-none focus:border-[#17a2b8] focus:ring-1 focus:ring-[#82dfed]"
       >
-        <option value="" disabled className="text-slate-700">
+        <option value="" disabled hidden>
           {placeholder}
         </option>
         {options.map((opt) => (

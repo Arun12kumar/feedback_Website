@@ -25,13 +25,17 @@ const UserDetailsPage = () => {
           <div className="font-roboto bg-[hsl(188,78%,41%)] text-white w-7 h-7 flex justify-center items-center rounded-full">
             1
           </div>
-          <div className="bg-[hsl(188,78%,41%)] w-20 md:w-24 rounded-full h-1"></div>
+          <div className="bg-[hsl(188,78%,41%)] w-16 md:w-20 rounded-full h-1"></div>
           <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
             2
           </div>
-          <div className="bg-[hsl(233,30%,95%)] w-20 md:w-24 rounded-full h-1"></div>
+          <div className="bg-[hsl(233,30%,95%)] w-16 md:w-20 rounded-full h-1"></div>
           <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
             3
+          </div>
+          <div className="bg-[hsl(233,30%,95%)] w-16 md:w-20 rounded-full h-1"></div>
+          <div className="font-roboto bg-[hsl(233,30%,95%)] text-[hsl(245,14%,49%)] w-7 h-7 flex justify-center items-center rounded-full">
+            4
           </div>
         </div>
         <form onSubmit={handleSubmit}>

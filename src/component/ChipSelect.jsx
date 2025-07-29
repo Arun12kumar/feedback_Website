@@ -32,7 +32,7 @@ export const ChipSelect = ({ title, items, placeholder }) => {
         className="relative min-h-[42px] h-20 overflow-y-auto border border-gray-300 rounded px-3 pt-3 pb-2 bg-white text-base text-slate-700 cursor-pointer flex flex-wrap gap-1 items-start focus-within:outline-none focus-within:border-[#17a2b8] focus-within:ring-1 focus-within:ring-[#82dfed]"
       >
         {selectedItems.length === 0 && (
-          <span className="text-slate-400">{placeholder}</span>
+          <span className="text-gray-400">{placeholder}</span>
         )}
         {selectedItems.map((item) => (
           <span
