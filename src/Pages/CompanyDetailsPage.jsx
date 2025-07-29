@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
+import BackBtn from "../component/BackBtn";
 
 const CompanyDetailsPage = () => {
   const navigate = useNavigate();
@@ -99,8 +100,13 @@ const CompanyDetailsPage = () => {
               options={options}
             />
           </div>
-
-          <SubmitButton />
+          <div className="grid grid-cols-2 gap-4">
+          <Link to="/">
+            <BackBtn/>
+           </Link>
+           <SubmitButton />
+          </div>
+        
         </form>
       </div>
     </div>
