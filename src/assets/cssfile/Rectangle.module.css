@@ -1,6 +1,3 @@
-
-
-
 #clipskew {
- clip-path: polygon(0 35%, 100% 0%, 100% 65%, 0% 100%);
+  clip-path: polygon(0 35%, 100% 0%, 100% 65%, 0% 100%);
 }

@@ -1,10 +1,10 @@
-import React from 'react'
-import rectangleStyle from '../assets/cssfile/Rectangle.module.css'
+import React from 'react';
+import rectangleStyle from '../assets/cssfile/Rectangle.module.css';
 
-const Rectangle = ({classname}) => {
+const Rectangle = ({ className }) => {
   return (
-    <div className={`${classname}`} id={rectangleStyle.clipskew}></div>
-  )
-}
+    <div className={`${className} ${rectangleStyle.clipskew}`}></div>
+  );
+};
 
-export default Rectangle
+export default Rectangle;

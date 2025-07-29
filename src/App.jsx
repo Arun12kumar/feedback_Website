@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import BasicLayout from "./layout/BasicLayout"
-import UserDetailsPage from "./pages/UserDetailsPage"
-import CompanyDetailsPage from "./pages/CompanyDetailsPage"
+import UserDetailsPage from "./Pages/UserDetailsPage"
+import CompanyDetailsPage from "./Pages/CompanyDetailsPage"
 
 
 const App = () => {
