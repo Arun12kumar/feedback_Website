@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
 import BackBtn from "../component/BackBtn";
+import Message from "../component/Message";
 
 const ServicesDetailPage = () => {
   const navigate = useNavigate();
@@ -14,34 +15,23 @@ const ServicesDetailPage = () => {
     e.preventDefault();
     navigate("/complete");
   };
-  const items = [
-    { id: "1", value: "E-commerce" },
-    { id: "2", value: "Healthcare & Wellness" },
-    { id: "3", value: "Education & eLearning" },
-    { id: "4", value: "Finance & Fintech" },
-    { id: "5", value: "Logistics & Transportation" },
-    { id: "6", value: "Real Estate & Property Management" },
-    { id: "7", value: "Travel & Hospitality" },
-    { id: "8", value: "Retail & Point of Sale" },
-    { id: "9", value: "Construction & Infrastructure" },
-    { id: "10", value: "Entertainment & Media" },
-    { id: "11", value: "Legal Services" },
-    { id: "12", value: "Manufacturing & Automation" },
-    { id: "13", value: "NGOs & Social Enterprises" },
-    { id: "14", value: "Startups & Tech Innovators" },
-    { id: "15", value: "Marketing & Advertising Agencies" },
-  ];
+const services = [
+  { id: "1", value: "UI/UX Design" },
+  { id: "2", value: "Website Development" },
+  { id: "3", value: "Mobile App Development" },
+  { id: "4", value: "Custom Software" },
+  { id: "5", value: "Branding & Logo Design" },
+  { id: "6", value: "E-commerce Solutions" },
+  { id: "7", value: "SEO & Digital Marketing" },
+  { id: "8", value: "Maintenance & Support" },
+];
 
-  const options = [
-    { value: "1-10", label: "1–10 employees" },
-    { value: "11-50", label: "11–50 employees" },
-    { value: "51-200", label: "51–200 employees" },
-    { value: "201-500", label: "201–500 employees" },
-    { value: "501-1000", label: "501–1,000 employees" },
-    { value: "1001-5000", label: "1,001–5,000 employees" },
-    { value: "5001-10000", label: "5,001–10,000 employees" },
-    { value: "10000+", label: "10,000+ employees" },
-  ];
+const budgetOptions = [
+  { value: "<25k", label: "Below ₹25,000" },
+  { value: "25k-50k", label: "₹25,000 – ₹50,000" },
+  { value: "50k-1L", label: "₹50,000 – ₹1,00,000" },
+  { value: "1L+", label: "Above ₹1,00,000" },
+];
 
   return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
@@ -81,25 +71,21 @@ const ServicesDetailPage = () => {
             Collects this information to better understand our service want.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <InputText title="Business Name" placename="Enter business name" />
-            <InputText
-              title="Website URL (optional)"
-              placename="Enter website URL"
-            />
-          </div>
-          <div className="grid grid-cols-1 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
             <ChipSelect
-              title="Business type"
-              items={items}
+              title="Services Needed"
+              items={services}
               placeholder="Select a Brand"
             />
             <SelectInput
-              title="Company Size"
+              title="Project Budget"
               placeholder="Select size"
-              options={options}
+              options={budgetOptions}
             />
+            <InputText title="Expected Timeline" placename="Enter expected timeline" />
+            <Message title="Project Description" placename="Describe your project in short"/>
           </div>
+
 
           <div className="grid grid-cols-2 gap-4">
             <Link to="/business">

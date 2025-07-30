@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
 import BackBtn from "../component/BackBtn";
+import Message from "../component/Message";
 
 const CompanyDetailsPage = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const CompanyDetailsPage = () => {
       <Rectangle className="absolute top-[30%] right-[-10%] w-[250px] sm:w-[300px] h-[100px] bg-[#a8e4f0] rotate-[10deg] opacity-80 z-0" />
       <Rectangle className="absolute bottom-[10%] right-[0%] w-[300px] sm:w-[400px] h-[100px] bg-[#d7e6f3] rotate-[5deg] opacity-70 z-0" />
 
-      <div className="w-[90%] md:w-[60%] lg:w-[40%] p-8 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 shadow-lg z-10">
+      <div className="w-[90%] md:w-[60%] lg:w-[46%] p-8 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 shadow-lg z-10">
         <div className="flex flex-row items-center justify-center gap-3 mb-6">
           <Link to="/">
             <div className="font-roboto bg-[hsl(188,78%,41%)] text-white w-7 h-7 flex justify-center items-center rounded-full">
@@ -83,8 +84,10 @@ const CompanyDetailsPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <InputText title="Business Name" placename="Enter business name" />
+            <InputText title="Business Email(optional)" placename="Enter your business Email" types="email" />
+            <InputText title="Contact" placename="Phone number" types="number" />
             <InputText
-              title="Website URL (optional)"
+              title="Business website URL (optional)"
               placename="Enter website URL"
             />
           </div>
@@ -99,6 +102,7 @@ const CompanyDetailsPage = () => {
               placeholder="Select size"
               options={options}
             />
+            <Message title="About Bisinuss" placename="Describe your business in short"/>
           </div>
           <div className="grid grid-cols-2 gap-4">
           <Link to="/">

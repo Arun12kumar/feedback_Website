@@ -3,6 +3,7 @@ import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
 import { useNavigate } from 'react-router-dom';
+import Message from "../component/Message";
 
 const UserDetailsPage = () => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const UserDetailsPage = () => {
       <Rectangle className="absolute top-[30%] right-[-10%] w-[250px] sm:w-[300px] h-[100px] bg-[#a8e4f0] rotate-[10deg] opacity-80 z-0" />
       <Rectangle className="absolute bottom-[10%] right-[0%] w-[300px] sm:w-[400px] h-[100px] bg-[#d7e6f3] rotate-[5deg] opacity-70 z-0" />
 
-      <div className="w-[90%] md:w-[60%] lg:w-[40%] p-8 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 shadow-lg z-10">
+      <div className="w-[90%] md:w-[60%] lg:w-[46%] p-8 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 shadow-lg z-10">
         <div className="flex flex-row items-center justify-center gap-3 mb-6">
           <div className="font-roboto bg-[hsl(188,78%,41%)] text-white w-7 h-7 flex justify-center items-center rounded-full">
             1
@@ -46,10 +47,28 @@ const UserDetailsPage = () => {
             Your information helps us connect you with the most relevant resources.
           </p>
 
-          <div className="grid grid-cols-1 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <InputText title="Name" placename="Enter your name" />
             <InputText title="Email (optional)" placename="Enter your email" types="email" />
-            <InputText title="Phone" placename="Phone your phone" types="number" />
+            <InputText title="Phone" placename="Enter your phone" types="number" />
+            <InputText title="Referral Source" placename="e.g. Google, Instagram, Friend, etc."  />
+            
+          </div>
+          <div className="grid grid-cols-1 gap-4 mb-6">
+            <Message title="Address" placename="City/Location"/>
+            <div>
+              <label className="font-medium text-slate-700">Preferred Contact Method</label>
+              <div className="flex gap-4 mt-2">
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" value="phone" className="accent-[#17a2b8]" />
+                  Phone
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="checkbox" value="whatsapp" className="accent-[#17a2b8]" />
+                  WhatsApp
+                </label>
+              </div>
+            </div>
           </div>
 
           <SubmitButton title="Continue"/>
