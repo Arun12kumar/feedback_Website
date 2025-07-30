@@ -87,7 +87,7 @@ const CompanyDetailsPage = () => {
             <InputText title="Business Email (optional)" placename="Enter your business Email" types="email" />
             <InputText title="Contact" placename="Phone number" types="number" />
             <InputText
-              title="Business website URL (optional)"
+              title="Business website URL"
               placename="Enter website URL"
             />
           </div>

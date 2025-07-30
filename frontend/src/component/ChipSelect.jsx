@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
-export const ChipSelect = ({ title, items, placeholder }) => {
+export const ChipSelect = ({ title, items, placeholder, error = false, errorMessage = "" }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,12 +24,16 @@ export const ChipSelect = ({ title, items, placeholder }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full relative">
-      <label className="font-medium text-slate-700 ">{title}</label>
+      <label className="font-medium text-slate-700">{title}</label>
 
-      {/* Select area with X */}
+      {/* Chip Box */}
       <div
         onClick={() => setIsOpen(true)}
-        className="relative min-h-[42px] h-20 overflow-y-auto border border-gray-300 rounded px-3 pt-3 pb-2 bg-white text-base text-slate-700 cursor-pointer flex flex-wrap gap-1 items-start focus-within:outline-none focus-within:border-[#17a2b8] focus-within:ring-1 focus-within:ring-[#82dfed]"
+        className={`relative min-h-[42px] h-20 overflow-y-auto border rounded px-3 pt-3 pb-2 bg-white text-base text-slate-700 cursor-pointer flex flex-wrap gap-1 items-start
+          ${error
+            ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-400'
+            : 'border-gray-300 focus-within:border-[#17a2b8] focus-within:ring-[#82dfed]'}
+          focus-within:outline-none focus-within:ring-1`}
       >
         {selectedItems.length === 0 && (
           <span className="text-gray-400">{placeholder}</span>
@@ -67,7 +71,7 @@ export const ChipSelect = ({ title, items, placeholder }) => {
         )}
       </div>
 
-      {/* Dropdown options */}
+      {/* Dropdown */}
       {isOpen && (
         <div className="absolute top-full mt-1 w-full border border-gray-300 rounded max-h-42 overflow-y-auto bg-white shadow-md z-10">
           {availableItems.length === 0 ? (
@@ -86,6 +90,11 @@ export const ChipSelect = ({ title, items, placeholder }) => {
             ))
           )}
         </div>
+      )}
+
+      {/* Error message */}
+      {error && (
+        <p className="text-sm text-red-600">{errorMessage || `${title} is required`}</p>
       )}
     </div>
   );
