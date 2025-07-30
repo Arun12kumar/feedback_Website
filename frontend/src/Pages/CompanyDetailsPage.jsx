@@ -84,7 +84,7 @@ const CompanyDetailsPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <InputText title="Business Name" placename="Enter business name" />
-            <InputText title="Business Email(optional)" placename="Enter your business Email" types="email" />
+            <InputText title="Business Email (optional)" placename="Enter your business Email" types="email" />
             <InputText title="Contact" placename="Phone number" types="number" />
             <InputText
               title="Business website URL (optional)"

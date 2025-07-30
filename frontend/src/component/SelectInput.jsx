@@ -3,7 +3,7 @@ import React from "react";
 const SelectInput = ({ title, options = [], placeholder = "Select an option" }) => {
   return (
     <div className="flex flex-col gap-2">
-      <label className="font-medium text-slate-700 text-lg">
+      <label className="font-medium text-slate-700 ">
         {title}
       </label>
       <select

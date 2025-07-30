@@ -24,7 +24,7 @@ export const ChipSelect = ({ title, items, placeholder }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full relative">
-      <label className="font-medium text-slate-700 text-lg">{title}</label>
+      <label className="font-medium text-slate-700 ">{title}</label>
 
       {/* Select area with X */}
       <div
