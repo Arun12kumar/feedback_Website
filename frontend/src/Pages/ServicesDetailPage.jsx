@@ -105,7 +105,7 @@ const ServicesDetailPage = () => {
             <Link to="/business">
               <BackBtn />
             </Link>
-            <SubmitButton />
+            <SubmitButton title="Continue"/>
           </div>
         </form>
       </div>

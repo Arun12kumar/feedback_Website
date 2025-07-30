@@ -52,7 +52,7 @@ const UserDetailsPage = () => {
             <InputText title="Phone" placename="Phone your phone" types="number" />
           </div>
 
-          <SubmitButton />
+          <SubmitButton title="Continue"/>
         </form>
       </div>
     </div>
