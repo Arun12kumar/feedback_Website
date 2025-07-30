@@ -1,16 +1,21 @@
-// Import express
 const express = require('express');
+const mongoose = require('mongoose');
+const feedbackRoutes = require('./src/routes/feedbackRoutes');
+require('dotenv').config();
+
+
 const app = express();
 
-// Define a port
-const PORT = 3000;
+app.use(express.json());
 
-// Create a route
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// MongoDB connect (replace with your updated URL)
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error(err));
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// Routes
+app.use('/api/feedbacks', feedbackRoutes);
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
