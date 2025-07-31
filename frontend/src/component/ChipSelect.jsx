@@ -1,21 +1,34 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
-export const ChipSelect = ({ title, items, placeholder, error = false, errorMessage = "" }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
+const ChipSelect = ({ 
+  title, 
+  items, 
+  placeholder, 
+  selectedItems = [], 
+  onSelectionChange, 
+  error = false, 
+  errorMessage = "",
+  required = false
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleItem = (item) => {
     const exists = selectedItems.find((i) => i.id === item.id);
+    let newSelection;
+    
     if (exists) {
-      setSelectedItems(selectedItems.filter((i) => i.id !== item.id));
+      newSelection = selectedItems.filter((i) => i.id !== item.id);
     } else {
-      setSelectedItems([...selectedItems, item]);
+      newSelection = [...selectedItems, item];
     }
+    
+    onSelectionChange(newSelection);
   };
 
   const removeItem = (id) => {
-    setSelectedItems(selectedItems.filter((i) => i.id !== id));
+    const newSelection = selectedItems.filter((i) => i.id !== id);
+    onSelectionChange(newSelection);
   };
 
   const availableItems = items.filter(
@@ -24,11 +37,14 @@ export const ChipSelect = ({ title, items, placeholder, error = false, errorMess
 
   return (
     <div className="flex flex-col gap-2 w-full relative">
-      <label className="font-medium text-slate-700">{title}</label>
+      <label className="font-medium text-slate-700">
+        {title}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
 
       {/* Chip Box */}
       <div
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
         className={`relative min-h-[42px] h-20 overflow-y-auto border rounded px-3 pt-3 pb-2 bg-white text-base text-slate-700 cursor-pointer flex flex-wrap gap-1 items-start
           ${error
             ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-400'
@@ -57,18 +73,16 @@ export const ChipSelect = ({ title, items, placeholder, error = false, errorMess
           </span>
         ))}
 
-        {isOpen && (
-          <button
-            type="button"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-gray-600"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsOpen(false);
-            }}
-          >
-            <X size={16} />
-          </button>
-        )}
+        <button
+          type="button"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-gray-600"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(!isOpen);
+          }}
+        >
+          <X size={16} />
+        </button>
       </div>
 
       {/* Dropdown */}
@@ -83,7 +97,10 @@ export const ChipSelect = ({ title, items, placeholder, error = false, errorMess
               <div
                 key={item.id}
                 className="px-4 py-2 cursor-pointer hover:bg-[#f1fafa]"
-                onClick={() => toggleItem(item)}
+                onClick={() => {
+                  toggleItem(item);
+                  setIsOpen(false);
+                }}
               >
                 {item.value}
               </div>

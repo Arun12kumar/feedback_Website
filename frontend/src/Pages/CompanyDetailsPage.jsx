@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
@@ -7,13 +8,81 @@ import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
 import BackBtn from "../component/BackBtn";
 import Message from "../component/Message";
+import useFeedbackStore from "../store/useFeedbackStore";
 
 const CompanyDetailsPage = () => {
   const navigate = useNavigate();
+  const { companyDetails, setCompanyDetails } = useFeedbackStore();
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCompanyDetails({
+      ...companyDetails,
+      [name]: value
+    });
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleSelectChange = (name, value) => {
+    setCompanyDetails({
+      ...companyDetails,
+      [name]: value
+    });
+  };
+
+  const handleChipSelect = (selectedItems) => {
+    setCompanyDetails({
+      ...companyDetails,
+      businessType: selectedItems
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!companyDetails.businessName?.trim()) {
+      newErrors.businessName = 'Business name is required';
+      isValid = false;
+    }
+
+    if (companyDetails.businessEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(companyDetails.businessEmail)) {
+      newErrors.businessEmail = 'Please enter a valid email address';
+      isValid = false;
+    }
+
+    if (!companyDetails.contact?.trim()) {
+      newErrors.contact = 'Contact number is required';
+      isValid = false;
+    } else if (!/^\d+$/.test(companyDetails.contact)) {
+      newErrors.contact = 'Contact number should contain only digits';
+      isValid = false;
+    }
+
+    if (!companyDetails.businessType?.length) {
+      newErrors.businessType = 'Please select at least one business type';
+      isValid = false;
+    }
+
+    if (!companyDetails.companySize) {
+      newErrors.companySize = 'Please select company size';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/service')
+    if (validateForm()) {
+      navigate('/service');
+    }
   };
 
   const items = [
@@ -34,16 +103,16 @@ const CompanyDetailsPage = () => {
     { id: "15", value: "Marketing & Advertising Agencies" },
   ];
 
-  const options=[
-  { value: "1-10", label: "1–10 employees" },
-  { value: "11-50", label: "11–50 employees" },
-  { value: "51-200", label: "51–200 employees" },
-  { value: "201-500", label: "201–500 employees" },
-  { value: "501-1000", label: "501–1,000 employees" },
-  { value: "1001-5000", label: "1,001–5,000 employees" },
-  { value: "5001-10000", label: "5,001–10,000 employees" },
-  { value: "10000+", label: "10,000+ employees" }
-  ]
+  const options = [
+    { value: "1-10", label: "1–10 employees" },
+    { value: "11-50", label: "11–50 employees" },
+    { value: "51-200", label: "51–200 employees" },
+    { value: "201-500", label: "201–500 employees" },
+    { value: "501-1000", label: "501–1,000 employees" },
+    { value: "1001-5000", label: "1,001–5,000 employees" },
+    { value: "5001-10000", label: "5,001–10,000 employees" },
+    { value: "10000+", label: "10,000+ employees" }
+  ];
 
   return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
@@ -83,12 +152,40 @@ const CompanyDetailsPage = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <InputText title="Business Name" placename="Enter business name" />
-            <InputText title="Business Email (optional)" placename="Enter your business Email" types="email" />
-            <InputText title="Contact" placename="Phone number" types="number" />
+            <InputText 
+              title="Business Name" 
+              name="businessName"
+              placename="Enter business name" 
+              value={companyDetails.businessName || ''}
+              onChange={handleChange}
+              error={errors.businessName}
+              
+            />
+            <InputText 
+              title="Business Email (optional)" 
+              name="businessEmail"
+              placename="Enter your business Email" 
+              type="email"
+              value={companyDetails.businessEmail || ''}
+              onChange={handleChange}
+              error={errors.businessEmail}
+            />
+            <InputText 
+              title="Contact" 
+              name="contact"
+              placename="Phone number" 
+              type="number"
+              value={companyDetails.contact || ''}
+              onChange={handleChange}
+              error={errors.contact}
+              
+            />
             <InputText
               title="Business website URL"
+              name="websiteUrl"
               placename="Enter website URL"
+              value={companyDetails.websiteUrl || ''}
+              onChange={handleChange}
             />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6">
@@ -96,21 +193,35 @@ const CompanyDetailsPage = () => {
               title="Business type"
               items={items}
               placeholder="Select a Brand"
+              onSelectionChange={handleChipSelect}
+              selectedItems={companyDetails.businessType || []}
+              error={errors.businessType}
+              
             />
             <SelectInput
               title="Company Size"
+              name="companySize"
               placeholder="Select size"
               options={options}
+              value={companyDetails.companySize || ''}
+              onChange={handleSelectChange}
+              error={errors.companySize}
+              
             />
-            <Message title="About Bisinuss" placename="Describe your business in short"/>
+            <Message 
+              title="About Business" 
+              name="aboutBusiness"
+              placename="Describe your business in short"
+              value={companyDetails.aboutBusiness || ''}
+              onChange={handleChange}
+            />
           </div>
           <div className="grid grid-cols-2 gap-4">
-          <Link to="/">
-            <BackBtn title="Back"/>
-           </Link>
-           <SubmitButton title="Continue"/>
+            <Link to="/">
+              <BackBtn title="Back"/>
+            </Link>
+            <SubmitButton title="Continue"/>
           </div>
-        
         </form>
       </div>
     </div>

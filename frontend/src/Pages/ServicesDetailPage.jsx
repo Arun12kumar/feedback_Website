@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
@@ -7,31 +8,91 @@ import ChipSelect from "../component/ChipSelect";
 import SelectInput from "../component/SelectInput";
 import BackBtn from "../component/BackBtn";
 import Message from "../component/Message";
+import useFeedbackStore from "../store/useFeedbackStore";
 
 const ServicesDetailPage = () => {
   const navigate = useNavigate();
+  const { serviceDetails, setServiceDetails } = useFeedbackStore();
+  const [errors, setErrors] = useState({});
+
+  const services = [
+    { id: "1", value: "UI/UX Design" },
+    { id: "2", value: "Website Development" },
+    { id: "3", value: "Mobile App Development" },
+    { id: "4", value: "Custom Software" },
+    { id: "5", value: "Branding & Logo Design" },
+    { id: "6", value: "E-commerce Solutions" },
+    { id: "7", value: "SEO & Digital Marketing" },
+    { id: "8", value: "Maintenance & Support" },
+  ];
+
+  const budgetOptions = [
+    { value: "<25k", label: "Below ₹25,000" },
+    { value: "25k-50k", label: "₹25,000 – ₹50,000" },
+    { value: "50k-1L", label: "₹50,000 – ₹1,00,000" },
+    { value: "1L+", label: "Above ₹1,00,000" },
+  ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setServiceDetails({
+      ...serviceDetails,
+      [name]: value
+    });
+    
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleSelectChange = (name, value) => {
+    setServiceDetails({
+      ...serviceDetails,
+      [name]: value
+    });
+  };
+
+  const handleChipSelect = (selectedItems) => {
+    setServiceDetails({
+      ...serviceDetails,
+      servicesNeeded: selectedItems
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!serviceDetails.servicesNeeded?.length) {
+      newErrors.servicesNeeded = 'Please select at least one service';
+      isValid = false;
+    }
+
+    if (!serviceDetails.projectBudget) {
+      newErrors.projectBudget = 'Please select project budget';
+      isValid = false;
+    }
+
+    if (!serviceDetails.expectedTimeline?.trim()) {
+      newErrors.expectedTimeline = 'Expected timeline is required';
+      isValid = false;
+    }
+
+    if (!serviceDetails.projectDescription?.trim()) {
+      newErrors.projectDescription = 'Project description is required';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/complete");
+    if (validateForm()) {
+      navigate("/complete");
+    }
   };
-const services = [
-  { id: "1", value: "UI/UX Design" },
-  { id: "2", value: "Website Development" },
-  { id: "3", value: "Mobile App Development" },
-  { id: "4", value: "Custom Software" },
-  { id: "5", value: "Branding & Logo Design" },
-  { id: "6", value: "E-commerce Solutions" },
-  { id: "7", value: "SEO & Digital Marketing" },
-  { id: "8", value: "Maintenance & Support" },
-];
-
-const budgetOptions = [
-  { value: "<25k", label: "Below ₹25,000" },
-  { value: "25k-50k", label: "₹25,000 – ₹50,000" },
-  { value: "50k-1L", label: "₹50,000 – ₹1,00,000" },
-  { value: "1L+", label: "Above ₹1,00,000" },
-];
 
   return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
@@ -75,17 +136,41 @@ const budgetOptions = [
             <ChipSelect
               title="Services Needed"
               items={services}
-              placeholder="Select a Brand"
+              placeholder="Select services"
+              onSelectionChange={handleChipSelect}
+              selectedItems={serviceDetails.servicesNeeded || []}
+              error={errors.servicesNeeded}
+              
             />
             <SelectInput
               title="Project Budget"
-              placeholder="Select size"
+              name="projectBudget"
+              placeholder="Select budget"
               options={budgetOptions}
+              value={serviceDetails.projectBudget || ''}
+              onChange={handleSelectChange}
+              error={errors.projectBudget}
+              
             />
-            <InputText title="Expected Timeline" placename="Enter expected timeline" />
-            <Message title="Project Description" placename="Describe your project in short"/>
+            <InputText 
+              title="Expected Timeline" 
+              name="expectedTimeline"
+              placename="Enter expected timeline" 
+              value={serviceDetails.expectedTimeline || ''}
+              onChange={handleChange}
+              error={errors.expectedTimeline}
+              
+            />
+            <Message 
+              title="Project Description" 
+              name="projectDescription"
+              placename="Describe your project in short"
+              value={serviceDetails.projectDescription || ''}
+              onChange={handleChange}
+              error={errors.projectDescription}
+              
+            />
           </div>
-
 
           <div className="grid grid-cols-2 gap-4">
             <Link to="/business">

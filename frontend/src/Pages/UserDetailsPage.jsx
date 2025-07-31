@@ -1,19 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import Rectangle from "../component/Rectangle";
 import InputText from "../component/InputText";
 import SubmitButton from "../component/SubmitButton";
 import { useNavigate } from 'react-router-dom';
 import Message from "../component/Message";
+import useFeedbackStore from "../store/useFeedbackStore";
 
 const UserDetailsPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { userDetails, setUserDetails } = useFeedbackStore();
+  const [errors, setErrors] = useState({});
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
-        navigate('/business')
-    };
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
 
-    return (
+    if (type === 'checkbox') {
+      const currentMethods = userDetails.preferredContactMethods || [];
+      let updatedMethods;
+
+      if (checked) {
+        updatedMethods = [...currentMethods, value];
+      } else {
+        updatedMethods = currentMethods.filter(method => method !== value);
+      }
+
+      setUserDetails({
+        ...userDetails,
+        preferredContactMethods: updatedMethods
+      });
+    } else {
+      setUserDetails({
+        ...userDetails,
+        [name]: value
+      });
+    }
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (!userDetails.name?.trim()) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+    if (!userDetails.referralSource?.trim()) {
+      newErrors.referralSource = 'referralSource is required';
+      isValid = false;
+    }
+    if (!userDetails.address?.trim()) {
+      newErrors.address = 'address is required';
+      isValid = false;
+    }
+
+    if (!userDetails.phone?.trim()) {
+      newErrors.phone = 'Phone number is required';
+      isValid = false;
+    } else if (!/^\d+$/.test(userDetails.phone)) {
+      newErrors.phone = 'Phone number should contain only digits';
+      isValid = false;
+    }
+
+    if (userDetails.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userDetails.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      navigate('/business');
+    }
+  };
+
+  return (
     <div className="relative flex justify-center items-center min-h-screen w-full bg-white overflow-hidden">
       {/* RECTANGLES - Positioned Like the Design */}
       <Rectangle className="absolute top-[15%] left-[-10%] w-[250px] sm:w-[300px] h-[100px] bg-[#c9e3f4] rotate-[-10deg] opacity-90 z-0" />
@@ -48,34 +118,86 @@ const UserDetailsPage = () => {
           </p>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <InputText title="Name" placename="Enter your name" />
-            <InputText title="Email (optional)" placename="Enter your email" types="email" />
-            <InputText title="Phone" placename="Enter your phone" types="number" />
-            <InputText title="Referral Source" placename="e.g. Google, Instagram, Friend, etc."  />
-            
+            <InputText
+              title="Name"
+              name="name"
+              placename="Enter your name"
+              value={userDetails.name || ''}
+              onChange={handleChange}
+
+              error={errors.name}
+            />
+            <InputText
+              title="Email (optional)"
+              name="email"
+              placename="Enter your email"
+              type="email"
+              value={userDetails.email || ''}
+              onChange={handleChange}
+              error={errors.email}
+            />
+            <InputText
+              title="Phone"
+              name="phone"
+              placename="Enter your phone"
+              type="number"
+              value={userDetails.phone || ''}
+              onChange={handleChange}
+
+              error={errors.phone}
+            />
+            <InputText
+              title="Referral Source"
+              name="referralSource"
+              placename="e.g. Google, Instagram, Friend, etc."
+              value={userDetails.referralSource || ''}
+              onChange={handleChange}
+              error={errors.referralSource}
+            />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-6">
-            <Message title="Address" placename="City/Location"/>
+            <Message
+              title="Address"
+              name="address"
+              placename="City/Location"
+              value={userDetails.address || ''}
+              onChange={handleChange}
+              error={errors.address}
+            />
             <div>
               <label className="font-medium text-slate-700">Preferred Contact Method</label>
               <div className="flex gap-4 mt-2">
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" value="phone" className="accent-[#17a2b8]" />
+                  <input
+                    type="checkbox"
+                    name="preferredContactMethods"
+                    value="phone"
+                    className="accent-[#17a2b8]"
+                    checked={userDetails.preferredContactMethods?.includes('phone') || false}
+                    onChange={handleChange}
+                  />
                   Phone
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" value="whatsapp" className="accent-[#17a2b8]" />
+                  <input
+                    type="checkbox"
+                    name="preferredContactMethods"
+                    value="whatsapp"
+                    className="accent-[#17a2b8]"
+                    checked={userDetails.preferredContactMethods?.includes('whatsapp') || false}
+                    onChange={handleChange}
+                  />
                   WhatsApp
                 </label>
               </div>
             </div>
           </div>
 
-          <SubmitButton title="Continue"/>
+          <SubmitButton title="Continue" />
         </form>
       </div>
     </div>
-    );
+  );
 };
 
 export default UserDetailsPage;

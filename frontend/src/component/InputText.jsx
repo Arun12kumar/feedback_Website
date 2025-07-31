@@ -3,25 +3,29 @@ import "../assets/cssfile/input.module.css"
 
 const InputText = ({
   title,
+  name,
   placename,
-  types = "text",
+  type = "text",
   error = false,
   errorMessage = "",
   value,
   onChange,
+  required = false,
 }) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="font-medium text-slate-700 text-lg">
         {title}
+        {required && <span className="text-red-500">*</span>}
       </label>
 
       <input
-        type={types}
+        type={type}
+        name={name}
         placeholder={placename}
         value={value}
         onChange={onChange}
-        name={`no-autofill-${title.toLowerCase()}`}
+        required={required}
         autoComplete="off"
         className={`border rounded px-3 py-2 bg-white text-base focus:outline-none
           ${error
