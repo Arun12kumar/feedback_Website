@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const feedbackRoutes = require('./src/routes/feedbackRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 require('dotenv').config();
@@ -7,6 +8,10 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(cors({
+  origin: 'http://localhost:5173', // <-- your frontend URL
+  credentials: true, // if you are using cookies or authorization headers
+}));
 app.use(express.json());
 
 // MongoDB connect (replace with your updated URL)

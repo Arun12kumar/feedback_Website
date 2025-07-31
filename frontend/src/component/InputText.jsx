@@ -1,7 +1,14 @@
 import React from "react";
-import InputSyle from '../assets/cssfile/input.module.css'; // if used elsewhere
 
-const InputText = ({ title, placename, types = "text", error = false, errorMessage = "" }) => {
+const InputText = ({
+  title,
+  placename,
+  types = "text",
+  error = false,
+  errorMessage = "",
+  value,
+  onChange,
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="font-medium text-slate-700 text-lg">
@@ -11,7 +18,8 @@ const InputText = ({ title, placename, types = "text", error = false, errorMessa
       <input
         type={types}
         placeholder={placename}
-        onChange={(e) => console.log(e.target.value)}
+        value={value}
+        onChange={onChange}
         name={`no-autofill-${title.toLowerCase()}`}
         autoComplete="new-password"
         className={`border rounded px-3 py-2 bg-white text-base focus:outline-none

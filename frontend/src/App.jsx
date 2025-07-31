@@ -8,25 +8,21 @@ import AuthLayout from "./layout/AuthLayout";
 import SignInPage from "./Pages/SignInPage";
 import DashboardLayout from "./layout/DashboardLayout";
 import Enquiries from "./Pages/DashboardPages/Enquiries";
+import ProtectedRoute from "./utils/ProtectedRoute"
 
 const App = () => {
   return (
     <Routes>
       <Route element={<AuthLayout />}>
         <Route path="/signin" element={<SignInPage />} />
-       
-      </Route>
-      <Route element={<DashboardLayout/>}>
-        
-        <Route path="/dashboard/enquiries" element={<Enquiries />} />
       </Route>
 
       {/* Protected routes */}
-      {/* <Route element={<ProtectedRoute />}>
-        <Route element={<BasicLayout />}>
-          <Route path="/dashboard" element={<Admindashboard />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard/enquiries" element={<Enquiries />} />
         </Route>
-      </Route> */}
+      </Route>
 
       <Route element={<BasicLayout />}>
         <Route path="/" element={<UserDetailsPage />} />
