@@ -106,7 +106,7 @@ const CompanyDetailsPage = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
           <Link to="/">
-            <BackBtn/>
+            <BackBtn title="Back"/>
            </Link>
            <SubmitButton title="Continue"/>
           </div>

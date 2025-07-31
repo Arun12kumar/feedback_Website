@@ -89,7 +89,7 @@ const budgetOptions = [
 
           <div className="grid grid-cols-2 gap-4">
             <Link to="/business">
-              <BackBtn />
+              <BackBtn title="Back"/>
             </Link>
             <SubmitButton title="Continue"/>
           </div>

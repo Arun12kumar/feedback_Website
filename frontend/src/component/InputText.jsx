@@ -1,4 +1,5 @@
 import React from "react";
+import "../assets/cssfile/input.module.css"
 
 const InputText = ({
   title,
@@ -21,7 +22,7 @@ const InputText = ({
         value={value}
         onChange={onChange}
         name={`no-autofill-${title.toLowerCase()}`}
-        autoComplete="new-password"
+        autoComplete="off"
         className={`border rounded px-3 py-2 bg-white text-base focus:outline-none
           ${error
             ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-400'
